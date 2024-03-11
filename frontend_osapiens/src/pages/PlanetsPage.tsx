@@ -3,9 +3,11 @@ import { URL_API } from '../api/urls';
 import ReactTable from '../components/Table';
 import { Favorite } from '../assets/svg/favorite';
 import { NonFavorite } from '../assets/svg/non_favorite';
+import { useNavigate } from "react-router-dom";
 import "../assets/css/planets.css"
 
 function PlanetsPage() {
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [planetSelected, setPlanetSelected] = useState(null)
     const [isPlanetSelected, setIsPlanetSelected] = useState(false)
@@ -24,9 +26,12 @@ function PlanetsPage() {
 
     const selectElement = (e, row) => {
         const planetSelected = row.original.name
-        const planetFiltered = data.filter(p => p.name === planetSelected)
-        setPlanetSelected(planetSelected)
-        setIsPlanetSelected(true)
+        const planetFiltered = data.filter(p => p.name === planetSelected)[0].url
+        const partes = planetFiltered.split("/")
+        const idPlanet = partes[partes.length - 2]
+        // setPlanetSelected(planetSelected)
+        navigate(idPlanet)
+        // setIsPlanetSelected(true)
     }
 
     return (
