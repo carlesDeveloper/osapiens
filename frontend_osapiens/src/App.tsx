@@ -9,6 +9,7 @@ import PlanetsPage from './pages/PlanetsPage.tsx';
 import FavoritesPage from './pages/FavoritesPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import NavBar from './components/NavBar.tsx';
+import PlanetDetailsPage from './pages/PlanetDetailsPage.tsx';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
           <Routes>
             <Route path="planets" element={<PlanetsPage />} />
+            <Route path="planets/:id" element={<PlanetDetailsPage />} />
             <Route path="favorites" element={<FavoritesPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>

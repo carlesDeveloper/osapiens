@@ -1,0 +1,13 @@
+.favorites__title{
+    width: 83vw;
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px 10px 10px;
+}
+
+.favorites__empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 83vw;
+    height: 96vh;
+}
