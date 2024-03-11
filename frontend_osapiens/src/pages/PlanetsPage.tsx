@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { URL_API } from '../api/urls';
 import ReactTable from '../components/Table';
+import { Favorite } from '../assets/svg/favorite';
+import { NonFavorite } from '../assets/svg/non_favorite';
 import "../assets/css/planets.css"
 
 function PlanetsPage() {
@@ -50,11 +52,11 @@ function PlanetsPage() {
                             Header: "Population",
                             accessor: "population"
                         },
-                        // {
-                        //     Header: 'Acciones',
-                        //     Cell: DeleteButton,
-                        // },
-
+                        {
+                            Header: 'Favorite',
+                            accessor: '',
+                            Cell: ({ value }) => (value ? <Favorite /> : <NonFavorite />),
+                        },
                     ]}
                     onRowClick={selectElement}
                 />
