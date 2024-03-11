@@ -1,8 +1,65 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { URL_API } from '../api/urls';
+import ReactTable from '../components/Table';
+import "../assets/css/planets.css"
 
 function PlanetsPage() {
-    return(
-        <>This is the planets Page</>
+    const [data, setData] = useState([]);
+    const [planetSelected, setPlanetSelected] = useState(null)
+    const [isPlanetSelected, setIsPlanetSelected] = useState(false)
+
+    useEffect(() => {
+        // Función para realizar la llamada a la API
+        const fetchData = async () => {
+            const response = await fetch(URL_API + "planets/");
+            let jsonData = await response.json();
+            jsonData = jsonData.results
+            setData(jsonData);
+        };
+
+        fetchData();
+    }, []);
+
+    const selectElement = (e, row) => {
+        const planetSelected = row.original.name
+        const planetFiltered = data.filter(p => p.name === planetSelected)
+        setPlanetSelected(planetSelected)
+        setIsPlanetSelected(true)
+    }
+
+    return (
+        <>  
+            <div className='planets__title'>Planets</div>
+            <div className='planets__table'>
+                <ReactTable
+                    data={data}
+                    columns={[
+                        {
+                            Header: "Name",
+                            accessor: "name",
+                        },
+                        {
+                            Header: "Climate",
+                            accessor: "climate"
+                        },
+                        {
+                            Header: "Diameter",
+                            accessor: "diameter"
+                        },
+                        {
+                            Header: "Population",
+                            accessor: "population"
+                        },
+                        // {
+                        //     Header: 'Acciones',
+                        //     Cell: DeleteButton,
+                        // },
+
+                    ]}
+                    onRowClick={selectElement}
+                />
+            </div>
+        </>
     )
 }
 
