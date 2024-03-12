@@ -1,6 +1,7 @@
 import * as React from "react";
 
-export function Favorite() {
+export function FavoriteIcon({ onClickFunction }) {
+  
   return (
     <svg width ="20px" viewBox="0 0 100 100">
       <polygon
@@ -8,6 +9,7 @@ export function Favorite() {
         fill="#e4d237"
         stroke="#e4d237"
         strokeWidth="10"
+        onClick={onClickFunction}
       />
     </svg>
   )

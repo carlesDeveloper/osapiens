@@ -1,5 +1,5 @@
 import * as React from "react";
-export function NonFavorite() {
+export function NonFavoriteIcon({ onClickFunction }) {
   return (
     <svg width ="20px" viewBox="0 0 100 100">
       <polygon
@@ -7,6 +7,7 @@ export function NonFavorite() {
         fill="none"
         stroke="#e4d237"
         strokeWidth="10"
+        onClick={onClickFunction}
       />
     </svg>
   )
