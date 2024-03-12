@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function FavoriteIcon({ onClickFunction }) {
+export function FavoriteIcon() {
   
   return (
     <svg width ="20px" viewBox="0 0 100 100">
@@ -9,7 +9,6 @@ export function FavoriteIcon({ onClickFunction }) {
         fill="#e4d237"
         stroke="#e4d237"
         strokeWidth="10"
-        onClick={onClickFunction}
       />
     </svg>
   )

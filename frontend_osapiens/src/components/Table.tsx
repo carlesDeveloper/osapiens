@@ -31,10 +31,10 @@ function ReactTable({ data, columns, onRowClick }) {
                 {rows.map((row, i) => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()} onClick={(e) => onRowClick(e, row)}>
+                        <tr {...row.getRowProps()} >
 
                             {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                return <td {...cell.getCellProps()} onClick={(e) => onRowClick(e, row, cell)}>{cell.render('Cell')}</td>
                             })}
                         </tr>
                     )
@@ -44,4 +44,7 @@ function ReactTable({ data, columns, onRowClick }) {
     )
 }
 
+ReactTable.defaultProps = {
+    onRowClick: undefined
+}
 export default ReactTable;

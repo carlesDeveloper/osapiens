@@ -27,7 +27,9 @@ function PlanetsPage() {
         fetchData();
     }, []);
 
-    const selectElement = (e, row) => {
+    const selectElement = (e, row, cell) => {
+        // In the case the user selects on Favorites columns this function should not do anything
+        if(cell.column.Header === "Favorite") return false
         const planetSelected = row.original.name
         const planetFiltered = data.filter(p => p.name === planetSelected)[0].url
         const partes = planetFiltered.split("/")
@@ -37,18 +39,17 @@ function PlanetsPage() {
         // setIsPlanetSelected(true)
     }
 
-    const isPlanetFavorite = (planet:string):boolean => {
-        
-        if(favorites.length === 0) return false;
+    const isPlanetFavorite = (planet: string): boolean => {
+
+        if (favorites.length === 0) return false;
         const searchPlanet = favorites.filter(f => f.name === planet)
-        debugger;
         const assesment = searchPlanet.length === 0 ? false : true
         console.log(assesment)
         return assesment
     }
 
     return (
-        <>  
+        <>
             <div className='planets__title'>Planets</div>
             <div className='planets__table'>
                 <ReactTable
@@ -73,14 +74,11 @@ function PlanetsPage() {
                         {
                             Header: 'Favorite',
                             accessor: '',
-                            Cell: (Cell) => {
-                                const isFavorite = isPlanetFavorite(Cell.row.original.name)
-                                return isFavorite ? <FavoriteIcon 
-                                                         onClickFunction={setItemNonFavorite(Cell.row.original)} 
-                                                    /> : 
-                                                    <NonFavoriteIcon 
-                                                        onClickFunction={setItemFavorite(Cell.row.original)} 
-                                                    />
+                            Cell: ({ row }) => {
+                                const isFavorite = isPlanetFavorite(row.original.name)
+                                return isFavorite ? <button className="favorite__button" onClick={(e) => setItemNonFavorite(row.original)}><FavoriteIcon /></button> 
+                                :
+                                    <button className="favorite__button" onClick={(e) => setItemFavorite(row.original)}><NonFavoriteIcon/></button>
                             },
                         },
                     ]}
