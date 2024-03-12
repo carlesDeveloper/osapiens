@@ -11,4 +11,6 @@ body{
 
 .content__main{
   float:left;
+  /* display:flex;
+  flex-direction: row; */
 }
