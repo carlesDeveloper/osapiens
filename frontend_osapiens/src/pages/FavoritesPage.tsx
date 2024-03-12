@@ -6,11 +6,19 @@ import { FavoritesContext } from '../context/FavoritesContext';
 function FavoritesPage() {
     const { favorites, setItemNonFavorite } = useContext(FavoritesContext);
     const [clickRemoveFavorite, setClickRemoveFavorite] = useState(false)
+    const [favoriteSelected, setFavoriteSelected] = useState()
 
-    const removeFavorite = () => {
+    const removeFavorite = (planetName:string) => {
+        setFavoriteSelected(planetName)
         setClickRemoveFavorite(true)
     }
     const cancelRemoving = () => {
+        setClickRemoveFavorite(false)
+    }
+
+    const confirmRemoving = (planetName:string) => {
+        const planetObject = favorites.filter(f => f.name === planetName)[0]
+        setItemNonFavorite(planetObject)
         setClickRemoveFavorite(false)
     }
     
@@ -23,7 +31,7 @@ function FavoritesPage() {
                     {favorites.map(fav => (
                         <div className='card'>
                             <div className='card__title'>{fav.name}
-                                <button className="closebutton__card" onClick={() => removeFavorite()}>
+                                <button className="closebutton__card" onClick={() => removeFavorite(fav.name)}>
                                     <span className="cerrar-icono">
                                         &times;
                                     </span>
@@ -58,7 +66,7 @@ function FavoritesPage() {
                             <div className='removemodal__text'>Planet will be removed from favorites</div>
                             <div className='removemodal__buttons'>
                                 <button id='cancelmodal' onClick={() => cancelRemoving()}>Cancel</button>
-                                <button id='remove'>Remove</button>
+                                <button id='remove' onClick={(e) => confirmRemoving(favoriteSelected)}>Remove</button>
                             </div>
                         </div>
                     </div>

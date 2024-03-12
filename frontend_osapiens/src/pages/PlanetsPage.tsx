@@ -44,7 +44,6 @@ function PlanetsPage() {
         if (favorites.length === 0) return false;
         const searchPlanet = favorites.filter(f => f.name === planet)
         const assesment = searchPlanet.length === 0 ? false : true
-        console.log(assesment)
         return assesment
     }
 
