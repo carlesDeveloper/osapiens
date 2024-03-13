@@ -5,11 +5,13 @@ import { FavoriteIcon } from '../assets/svg/FavoriteIcon';
 import { NonFavoriteIcon } from '../assets/svg/NonFavoriteIcon';
 import { useNavigate } from "react-router-dom";
 import { FavoritesContext } from '../context/FavoritesContext';
+import { useParams } from 'react-router-dom';
 import "../assets/css/planets.css"
 
 function PlanetDetailsPage() {
     const navigate = useNavigate();
-    const { favorites, setItemFavorite, setItemNonFavorite } = useContext(FavoritesContext);
+    const { planetID } = useParams();
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL } = useContext(FavoritesContext);
 
     const [data, setData] = useState([]);
     const [planetSelected, setPlanetSelected] = useState(null)
@@ -26,6 +28,20 @@ function PlanetDetailsPage() {
 
         fetchData();
     }, []);
+
+    useEffect(() => {
+
+        if (!planetID) {
+            setIsPlanetSelected(false)
+            return false
+        }
+        const dataFiltered = data.filter(row => planetID === getIdFromURL(row.url))[0]
+        if (dataFiltered) {
+            setIsPlanetSelected(true)
+            setPlanetSelected(dataFiltered)
+        }
+
+    }, [data, planetID])
 
     const selectElement = (e, row, cell) => {
         // In the case the user selects on Favorites columns this function should not do anything
@@ -86,13 +102,16 @@ function PlanetDetailsPage() {
                     />
                 </div>
             </div>
-            <div className="planetdetails">
-                <div className="planetname">Hoth</div>
-                <div className="additionaldetails">
-                    <div className="climatedetails">Climate: frozen</div>
-                    <div className="grafitydetails">Gravity: 1 standard</div>
+            {(isPlanetSelected && planetSelected !== null) ? (
+                <div className="planetdetails">
+                    <div className="planetname">{planetSelected.name}</div>
+                    <div className="additionaldetails">
+                        <div className="climatedetails">Climate: {planetSelected.climate}</div>
+                        <div className="grafitydetails">Gravity: {planetSelected.gravity}</div>
+                    </div>
                 </div>
-            </div>
+            ) : null}
+
         </>
     )
 }

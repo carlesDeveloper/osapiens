@@ -9,7 +9,7 @@ import "../assets/css/planets.css"
 
 function PlanetsPage() {
     const navigate = useNavigate();
-    const { favorites, setItemFavorite, setItemNonFavorite } = useContext(FavoritesContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL } = useContext(FavoritesContext);
 
     const [data, setData] = useState([]);
     const [planetSelected, setPlanetSelected] = useState(null)
@@ -27,13 +27,13 @@ function PlanetsPage() {
         fetchData();
     }, []);
 
+    
     const selectElement = (e, row, cell) => {
         // In the case the user selects on Favorites columns this function should not do anything
         if(cell.column.Header === "Favorite") return false
         const planetSelected = row.original.name
         const planetFiltered = data.filter(p => p.name === planetSelected)[0].url
-        const partes = planetFiltered.split("/")
-        const idPlanet = partes[partes.length - 2]
+        const idPlanet = getIdFromURL(planetFiltered)
         // setPlanetSelected(planetSelected)
         navigate(idPlanet)
         // setIsPlanetSelected(true)

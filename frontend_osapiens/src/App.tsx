@@ -22,7 +22,7 @@ function App() {
 
           <Routes>
             <Route path="planets" element={<PlanetsPage />} />
-            <Route path="planets/:id" element={<PlanetDetailsPage />} />
+            <Route path="planets/:planetID" element={<PlanetDetailsPage />} />
             <Route path="favorites" element={<FavoritesPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
