@@ -1,7 +1,9 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
+import { URL_API } from '../api/urls';
 export const FavoritesContext = createContext()
 
 const FavoritesProvider = (props) => {
+    const [data, setData] = useState([]);
     const [favorites, setFavorites] = useState([])
 
     const setItemNonFavorite = (planetObject) => {
@@ -19,9 +21,22 @@ const FavoritesProvider = (props) => {
         return idPart
     }
 
+    useEffect(() => {
+        // Función para realizar la llamada a la API
+        const fetchData = async () => {
+            const response = await fetch(URL_API + "planets/");
+            let jsonData = await response.json();
+            jsonData = jsonData.results
+            setData(jsonData);
+        };
+
+        fetchData();
+    }, []);
+
     return(
         <FavoritesContext.Provider
             value={{
+                data, setData,
                 favorites, setFavorites,
                 setItemFavorite, setItemNonFavorite,
                 getIdFromURL
