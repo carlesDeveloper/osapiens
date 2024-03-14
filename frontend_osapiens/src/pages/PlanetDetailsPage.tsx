@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { DataContext } from '../context/DataContext';
 import { useParams } from 'react-router-dom';
 import Pagination from '../components/Pagination';
+import ModalError from '../components/ModalError';
 import "../assets/css/planets.css"
 
 function PlanetDetailsPage() {
     const navigate = useNavigate();
     const { planetID } = useParams();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(DataContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data, 
+        isError, setIsError, msgError, setMsgError} = useContext(DataContext);
 
     const [planetSelected, setPlanetSelected] = useState(null)
     const [isPlanetSelected, setIsPlanetSelected] = useState(false)
@@ -17,15 +19,22 @@ function PlanetDetailsPage() {
 
     useEffect(() => {
 
-        if (!planetID) {
-            setIsPlanetSelected(false)
-            return false
+        try{
+            if (!planetID) {
+                setIsPlanetSelected(false)
+                return false
+            }
+            const dataFiltered = data.filter(row => planetID === getIdFromURL(row.url))[0]
+            if (dataFiltered) {
+                setIsPlanetSelected(true)
+                setPlanetSelected(dataFiltered)
+            }
+        }catch(err){
+            console.log(err)
+            setIsError(true)
+            setMsgError("The planet details could not be retrieved, try again later")
         }
-        const dataFiltered = data.filter(row => planetID === getIdFromURL(row.url))[0]
-        if (dataFiltered) {
-            setIsPlanetSelected(true)
-            setPlanetSelected(dataFiltered)
-        }
+        
 
     }, [data, planetID])
 
@@ -46,6 +55,12 @@ function PlanetDetailsPage() {
                     </div>
                 </div>
             ) : null}
+            <ModalError
+                isOpen={isError}
+                msg={msgError}
+                setIsOpen={setIsError}
+                setMsgError={setMsgError} 
+            />
 
         </>
     )

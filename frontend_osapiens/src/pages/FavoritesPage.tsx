@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react'
 import "../assets/css/favorites.css"
 import { DataContext } from '../context/DataContext';
 import Card from '../components/Card';
+import ModalError from '../components/ModalError';
 
 
 function FavoritesPage() {
-    const { favorites, setItemNonFavorite } = useContext(DataContext);
+    const { favorites, setItemNonFavorite, isError, setIsError, msgError, setMsgError } = useContext(DataContext);
     const [clickRemoveFavorite, setClickRemoveFavorite] = useState(false)
     const [favoriteSelected, setFavoriteSelected] = useState()
 
@@ -18,9 +19,16 @@ function FavoritesPage() {
     }
 
     const confirmRemoving = (planetName:string) => {
-        const planetObject = favorites.filter(f => f.name === planetName)[0]
-        setItemNonFavorite(planetObject)
-        setClickRemoveFavorite(false)
+        try{
+            const planetObject = favorites.filter(f => f.name === planetName)[0]
+            setItemNonFavorite(planetObject)
+            setClickRemoveFavorite(false)
+        }catch(err){
+            console.log(err)
+            setIsError(true)
+            setMsgError("The planet could not be removed from favorite list")
+        }
+        
     }
     
 
@@ -61,7 +69,12 @@ function FavoritesPage() {
                     </div>
                 </div>
             ) : null}
-            
+            <ModalError
+                isOpen={isError}
+                msg={msgError}
+                setIsOpen={setIsError}
+                setMsgError={setMsgError} 
+            />
         </>
     )
 }

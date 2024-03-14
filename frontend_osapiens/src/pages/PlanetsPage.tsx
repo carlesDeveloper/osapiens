@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PlanetsTable from '../components/PlanetsTable'
 import "../assets/css/planets.css"
 import Pagination from '../components/Pagination';
+import { DataContext } from '../context/DataContext';
+import ModalError from '../components/ModalError';
 
 function PlanetsPage() {
-
+    const { isError, setIsError, msgError, setMsgError } = useContext(DataContext);
 
     return (
         <>
@@ -13,6 +15,12 @@ function PlanetsPage() {
                 <PlanetsTable />
                 <Pagination />
             </div>
+            <ModalError
+                isOpen={isError}
+                msg={msgError}
+                setIsOpen={setIsError}
+                setMsgError={setMsgError} 
+            />
         </>
     )
 }

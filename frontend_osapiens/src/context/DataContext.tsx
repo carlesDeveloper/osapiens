@@ -9,17 +9,32 @@ const DataProvider = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPlanets, setTotalPlanets] = useState(0)
     const planetsPerPage = 10;
+    const [isError, setIsError] = useState(false)
+    const [msgError, setMsgError] = useState("")
 
     const setItemNonFavorite = (planetObject) => {
-        const planetName = planetObject.name
-        const newFavorites = favorites.filter(f => f.name !== planetName)
-        setFavorites(newFavorites)
+        try {
+            const planetName = planetObject.name
+            const newFavorites = favorites.filter(f => f.name !== planetName)
+            setFavorites(newFavorites)
+        } catch (err) {
+            console.log(err)
+            setIsError(true)
+            setMsgError("Planet could not be set as non favorite")
+        }
+
     }
     const setItemFavorite = (planetObject) => {
-        setFavorites([...favorites, planetObject])
+        try {
+            setFavorites([...favorites, planetObject])
+        } catch (err) {
+            console.log(err)
+            setIsError(true)
+            setMsgError("Planet could not be set as favorite")
+        }
     }
 
-    const getIdFromURL = (urlString:string) => {
+    const getIdFromURL = (urlString: string) => {
         const parts = urlString.split("/")
         const idPart = parts[parts.length - 2]
         return idPart
@@ -28,20 +43,29 @@ const DataProvider = (props) => {
     useEffect(() => {
         // Función para realizar la llamada a la API
         const fetchData = async () => {
-            const response = await fetch(URL_API + "planets/?page="+currentPage);
-            let jsonData = await response.json();
+            try {
+                const response = await fetch(URL_API + "planets/?page=" + currentPage);
+                let jsonData = await response.json();
 
-            const count = jsonData.count 
-            setTotalPlanets(count)
+                const count = jsonData.count
+                setTotalPlanets(count)
 
-            jsonData = jsonData.results
-            setData(jsonData);
+                jsonData = jsonData.results
+                setData(jsonData);
+            }
+            catch (err) {
+                console.log(err)
+                setIsError(true)
+                setMsgError("The data could not be retrieved, please try again later")
+
+            }
+
         };
 
         fetchData();
     }, [currentPage]);
 
-    return(
+    return (
         <DataContext.Provider
             value={{
                 data, setData,
@@ -50,6 +74,8 @@ const DataProvider = (props) => {
                 getIdFromURL,
                 currentPage, setCurrentPage,
                 planetsPerPage, totalPlanets,
+                isError, setIsError,
+                msgError, setMsgError
             }}
         >
             {props.children}
