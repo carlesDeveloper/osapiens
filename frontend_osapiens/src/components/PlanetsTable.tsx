@@ -41,10 +41,12 @@ function PlanetsTable() {
             {
                 accessorKey: 'diameter',
                 header: "Diameter",
+                sortingFn: 'alphanumeric',
             },
             {
                 accessorKey: 'population',
                 header: 'Population',
+                sortingFn: 'alphanumeric',
             },
             {
                 accessorKey: '',
