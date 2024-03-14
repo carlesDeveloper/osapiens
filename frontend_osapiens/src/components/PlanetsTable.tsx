@@ -17,7 +17,7 @@ function PlanetsTable() {
         const idPlanet = getIdFromURL(planetFiltered)
         // setPlanetSelected(planetSelected)
         // navigate("/planet/"+idPlanet)
-        navigate("/planet/"+idPlanet);
+        navigate("/planet/"+idPlanet, { replace: true });
         // setIsPlanetSelected(true)
     }
 
