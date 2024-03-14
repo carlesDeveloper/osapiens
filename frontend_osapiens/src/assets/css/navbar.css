@@ -17,6 +17,6 @@
     color: #E0E0E0;
 }
 
-.navbar a:hover, .navbar a:focus{
+.navbar a:hover, .navbar a.active{
     background-color: #1c5686;
 }
