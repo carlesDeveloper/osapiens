@@ -1,44 +1,70 @@
 import React from 'react'
-import { useTable } from 'react-table'
+import {
+    useReactTable,
+    getCoreRowModel,
+    getSortedRowModel,
+    flexRender
+} from '@tanstack/react-table';
 
-function ReactTable({ data, columns, onRowClick }) {
-    const {
-        getTableProps,
-        getTableBodyProps,
-        rows,
-        prepareRow,
-        headerGroups,
-    } = useTable({
-        columns,
+export function ReactTable({ data, columns, onRowClick }) {
+
+    const [sorting, setSorting] = React.useState<SortingState>([])
+
+    const table = useReactTable({
         data,
+        columns,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        debugTable: true,
     })
 
     return (
-        <table {...getTableProps()}>
+        <table>
             <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => {
-                            const { render, getHeaderProps } = column
+                {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id}>
+                        {headerGroup.headers.map(header => {
                             return (
-                                <th {...getHeaderProps()}>{render("Header")}</th>
+                                <th key={header.id} colSpan={header.colSpan}>
+                                    {header.isPlaceholder ? null : (
+                                        <div
+                                            className={
+                                                header.column.getCanSort()
+                                                    ? 'cursor-pointer select-none'
+                                                    : ''
+                                            }
+                                            onClick={header.column.getToggleSortingHandler()}
+                                        >
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                            {{
+                                                asc: '↑',
+                                                desc: '↓',
+                                            }[header.column.getIsSorted() as string] ?? null}
+                                        </div>
+                                    )}
+                                </th>
                             )
                         })}
                     </tr>
                 ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()} >
-
-                            {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()} onClick={(e) => onRowClick(e, row, cell)}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
-                    )
-                })}
+            <tbody>
+                {table.getRowModel().rows.map(row => (
+                    <tr key={row.id} >
+                        {row.getVisibleCells().map(cell => (
+                            <td key={cell.id} onClick={(e) => onRowClick(e, row, cell)}>
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </td>
+                        ))}
+                    </tr>
+                ))}
             </tbody>
         </table>
     )

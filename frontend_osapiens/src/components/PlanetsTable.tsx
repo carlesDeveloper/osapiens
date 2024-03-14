@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import ReactTable from '../components/Table';
 import { FavoriteIcon } from '../assets/svg/FavoriteIcon';
 import { NonFavoriteIcon } from '../assets/svg/NonFavoriteIcon';
@@ -11,14 +11,12 @@ function PlanetsTable() {
 
     const selectElement = (e, row, cell) => {
         // In the case the user selects on Favorites columns this function should not do anything
-        if(cell.column.Header === "Favorite") return false
+        if (cell.column.Header === "Favorite") return false
         const planetSelected = row.original.name
         const planetFiltered = data.filter(p => p.name === planetSelected)[0].url
         const idPlanet = getIdFromURL(planetFiltered)
-        // setPlanetSelected(planetSelected)
-        // navigate("/planet/"+idPlanet)
-        navigate("/planet/"+idPlanet, { replace: true });
-        // setIsPlanetSelected(true)
+
+        navigate("/planets/" + idPlanet, { replace: true });
     }
 
     const isPlanetFavorite = (planet: string): boolean => {
@@ -31,41 +29,36 @@ function PlanetsTable() {
     const columns = useMemo(() => (
         [
             {
-                Header: "Name",
-                accessor: "name",
-                disableSortBy: true,
+                accessorKey: 'name',
+                header: "Name",
+                enableSorting: false,
             },
             {
-                Header: "Climate",
-                accessor: "climate",
-                disableSortBy: true,
+                accessorKey: 'climate',
+                header: "Climate",
+                enableSorting: false,
             },
             {
-                Header: "Diameter",
-                accessor: "diameter",
-                sortable: true,
+                accessorKey: 'diameter',
+                header: "Diameter",
             },
             {
-                Header: "Population",
-                accessor: "population",
-                sortable: true,
+                accessorKey: 'population',
+                header: 'Population',
             },
             {
-                Header: 'Favorite',
-                accessor: '',
-                Cell: ({ row }) => {
+                accessorKey: '',
+                header: 'Favorite',
+                cell: ({ row }) => {
                     const isFavorite = isPlanetFavorite(row.original.name)
-                    return isFavorite ? <button className="favorite__button" onClick={(e) => setItemNonFavorite(row.original)}><FavoriteIcon /></button> 
-                    :
-                        <button className="favorite__button" onClick={(e) => setItemFavorite(row.original)}><NonFavoriteIcon/></button>
+                    return isFavorite ? <button className="favorite__button" onClick={(e) => setItemNonFavorite(row.original)}><FavoriteIcon /></button>
+                        :
+                        <button className="favorite__button" onClick={(e) => setItemFavorite(row.original)}><NonFavoriteIcon /></button>
                 },
-                disableSortBy: true,
+                enableSorting: false,// This column will sort in descending order first (default for number columns anyway)
             },
         ]
-    ),[isPlanetFavorite, data])
-    useEffect(() => {
-
-    },[favorites])
+    ), [isPlanetFavorite, data])
 
     return (
         <>
