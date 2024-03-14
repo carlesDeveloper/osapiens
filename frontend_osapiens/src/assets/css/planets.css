@@ -76,11 +76,13 @@ tbody tr:last-child td{
     align-items: center;
     color: #333333;
     border-radius: 10px;
+    text-align: center;
 }
 
 .climatedetails{
     font-size: 1.3rem;
     margin-bottom: 10px;
+    
 }
 
 .grafitydetails{
