@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 import PlanetsTable from '../components/PlanetsTable'
 import { useNavigate } from "react-router-dom";
-import { FavoritesContext } from '../context/FavoritesContext';
+import { DataContext } from '../context/DataContext';
 import { useParams } from 'react-router-dom';
+import Pagination from '../components/Pagination';
 import "../assets/css/planets.css"
 
 function PlanetDetailsPage() {
     const navigate = useNavigate();
     const { planetID } = useParams();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(FavoritesContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(DataContext);
 
     const [planetSelected, setPlanetSelected] = useState(null)
     const [isPlanetSelected, setIsPlanetSelected] = useState(false)
@@ -34,6 +35,7 @@ function PlanetDetailsPage() {
             <div className="planets__section">
                 <div className='planets__title'>Planets</div>
                 <PlanetsTable />
+                <Pagination />
             </div>
             {(isPlanetSelected && planetSelected !== null) ? (
                 <div className="planetdetails">

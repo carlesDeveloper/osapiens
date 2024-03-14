@@ -3,11 +3,11 @@ import ReactTable from '../components/Table';
 import { FavoriteIcon } from '../assets/svg/FavoriteIcon';
 import { NonFavoriteIcon } from '../assets/svg/NonFavoriteIcon';
 import { useNavigate } from "react-router-dom";
-import { FavoritesContext } from '../context/FavoritesContext';
+import { DataContext } from '../context/DataContext';
 
 function PlanetsTable() {
     const navigate = useNavigate();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(FavoritesContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(DataContext);
 
     const selectElement = (e, row, cell) => {
         // In the case the user selects on Favorites columns this function should not do anything

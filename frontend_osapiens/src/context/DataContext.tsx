@@ -1,10 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { URL_API } from '../api/urls';
-export const FavoritesContext = createContext()
+export const DataContext = createContext()
 
-const FavoritesProvider = (props) => {
+const DataProvider = (props) => {
     const [data, setData] = useState([]);
     const [favorites, setFavorites] = useState([])
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPlanets, setTotalPlanets] = useState(0)
+    const planetsPerPage = 10;
 
     const setItemNonFavorite = (planetObject) => {
         const planetName = planetObject.name
@@ -24,27 +28,33 @@ const FavoritesProvider = (props) => {
     useEffect(() => {
         // Función para realizar la llamada a la API
         const fetchData = async () => {
-            const response = await fetch(URL_API + "planets/");
+            const response = await fetch(URL_API + "planets/?page="+currentPage);
             let jsonData = await response.json();
+
+            const count = jsonData.count 
+            setTotalPlanets(count)
+
             jsonData = jsonData.results
             setData(jsonData);
         };
 
         fetchData();
-    }, []);
+    }, [currentPage]);
 
     return(
-        <FavoritesContext.Provider
+        <DataContext.Provider
             value={{
                 data, setData,
                 favorites, setFavorites,
                 setItemFavorite, setItemNonFavorite,
-                getIdFromURL
+                getIdFromURL,
+                currentPage, setCurrentPage,
+                planetsPerPage, totalPlanets,
             }}
         >
             {props.children}
-        </FavoritesContext.Provider>
+        </DataContext.Provider>
     )
 }
 
-export default FavoritesProvider;
+export default DataProvider;

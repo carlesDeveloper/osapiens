@@ -1,6 +1,7 @@
 import React from 'react'
 import PlanetsTable from '../components/PlanetsTable'
 import "../assets/css/planets.css"
+import Pagination from '../components/Pagination';
 
 function PlanetsPage() {
     
@@ -9,6 +10,7 @@ function PlanetsPage() {
         <>
             <div className='planets__title'>Planets</div>
             <PlanetsTable />
+            <Pagination />
         </>
     )
 }

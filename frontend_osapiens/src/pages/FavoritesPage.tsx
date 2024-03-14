@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import "../assets/css/favorites.css"
-import { FavoritesContext } from '../context/FavoritesContext';
+import { DataContext } from '../context/DataContext';
 
 
 function FavoritesPage() {
-    const { favorites, setItemNonFavorite } = useContext(FavoritesContext);
+    const { favorites, setItemNonFavorite } = useContext(DataContext);
     const [clickRemoveFavorite, setClickRemoveFavorite] = useState(false)
     const [favoriteSelected, setFavoriteSelected] = useState()
 
