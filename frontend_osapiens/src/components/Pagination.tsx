@@ -9,11 +9,19 @@ function Pagination(){
         setCurrentPage(page)
     }
     const getNextPage = (currentPage:number) => {
-        setCurrentPage(currentPage + 1)
+        if(currentPage === pageNumbers[pageNumbers.length - 1]) {
+            return false
+        }else{
+            setCurrentPage(currentPage + 1)
+        }
     }
 
     const getPreviousPage = (currentPage:number) => {
-        setCurrentPage(currentPage - 1)
+        if(currentPage === 1) {
+            return false
+        }else{
+            setCurrentPage(currentPage - 1)
+        }
     }
 
     useEffect(() => {
