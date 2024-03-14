@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Route,
   BrowserRouter,
   Routes,
+  Navigate,
 } from "react-router-dom";
 import './index.css'
 import PlanetsPage from './pages/PlanetsPage.tsx';
@@ -21,12 +22,12 @@ function App() {
         <div className='content__main'>
 
           <Routes>
+            <Route path="/" element={<Navigate to="/planets" />} />
             <Route path="planets" element={<PlanetsPage />} />
             <Route path="planets/:planetID" element={<PlanetDetailsPage />} />
             <Route path="favorites" element={<FavoritesPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
-
         </div>
       </BrowserRouter>
     </>
