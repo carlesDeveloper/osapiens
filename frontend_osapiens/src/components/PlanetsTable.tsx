@@ -4,17 +4,27 @@ import { FavoriteIcon } from '../assets/svg/FavoriteIcon';
 import { NonFavoriteIcon } from '../assets/svg/NonFavoriteIcon';
 import { useNavigate } from "react-router-dom";
 import { DataContext } from '../context/DataContext';
+import { Planets } from '../interfaces/Planets';
+import { DataContextValue } from '../interfaces/DataContext';
+
+interface Columns {
+    accessorKey: string;
+    header: string;
+    enableSorting?: boolean;
+    sortingFn?: string;
+    cell?: any;
+}
 
 function PlanetsTable() {
     const navigate = useNavigate();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext(DataContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext<DataContextValue>(DataContext);
 
-    const selectElement = (e, row, cell) => {
+    const selectElement = (e: React.MouseEvent, row: any, cell: any) => {
         // In the case the user selects on Favorites columns this function should not do anything
         if (cell.column.Header === "Favorite") return false
         const planetSelected = row.original.name
-        const planetFiltered = data.filter(p => p.name === planetSelected)[0].url
-        const idPlanet = getIdFromURL(planetFiltered)
+        const planetFiltered = data.filter(p => p.name === planetSelected)[0]
+        const idPlanet = getIdFromURL(planetFiltered.url)
 
         navigate("/planets/" + idPlanet, { replace: true });
     }
@@ -26,7 +36,7 @@ function PlanetsTable() {
         const assesment = searchPlanet.length === 0 ? false : true
         return assesment
     }
-    const columns = useMemo(() => (
+    const columns: Columns[] = useMemo(() => (
         [
             {
                 accessorKey: 'name',

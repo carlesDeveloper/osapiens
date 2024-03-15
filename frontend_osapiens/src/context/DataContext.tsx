@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { URL_API } from '../api/urls';
-export const DataContext = createContext()
+import { DataContextValue } from '../interfaces/DataContext';
+import { Planets } from '../interfaces/Planets';
+export const DataContext = createContext<DataContextValue>({})
 
 const DataProvider = (props) => {
-    const [data, setData] = useState([]);
-    const [favorites, setFavorites] = useState([])
+    const [data, setData] = useState<Planets[]>([]);
+    const [favorites, setFavorites] = useState<Planets[]>([])
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPlanets, setTotalPlanets] = useState(0)
@@ -12,7 +14,7 @@ const DataProvider = (props) => {
     const [isError, setIsError] = useState(false)
     const [msgError, setMsgError] = useState("")
 
-    const setItemNonFavorite = (planetObject) => {
+    const setItemNonFavorite = (planetObject: Planets) => {
         try {
             const planetName = planetObject.name
             const newFavorites = favorites.filter(f => f.name !== planetName)
@@ -24,7 +26,7 @@ const DataProvider = (props) => {
         }
 
     }
-    const setItemFavorite = (planetObject) => {
+    const setItemFavorite = (planetObject: Planets) => {
         try {
             setFavorites([...favorites, planetObject])
         } catch (err) {

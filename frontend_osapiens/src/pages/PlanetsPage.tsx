@@ -4,9 +4,10 @@ import "../assets/css/planets.css"
 import Pagination from '../components/Pagination';
 import { DataContext } from '../context/DataContext';
 import ModalError from '../components/ModalError';
+import { DataContextValue } from '../interfaces/DataContext';
 
 function PlanetsPage() {
-    const { isError, setIsError, msgError, setMsgError } = useContext(DataContext);
+    const { isError, setIsError, msgError, setMsgError } = useContext<DataContextValue>(DataContext);
 
     return (
         <>

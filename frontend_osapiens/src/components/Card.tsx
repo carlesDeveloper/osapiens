@@ -1,6 +1,11 @@
 import React from 'react'
+import { Planets } from '../interfaces/Planets';
 
-function Card({name, climate, gravity, onCloseFunction}) {
+interface CardProps extends Planets{
+    onCloseFunction: (name: string)=> void
+}
+
+function Card({name, climate, gravity, onCloseFunction}:CardProps ) {
     return (
         <div className='card'>
             <div className='card__title'>{name}

@@ -1,9 +1,10 @@
 import React from 'react'
 import "../assets/css/modalerror.css"
+import { ErrorModal } from '../interfaces/Error';
 
-function ModalError({ isOpen, setIsOpen, msg, setMsgError }) {
+function ModalError({ isOpen, setIsOpen, msg, setMsgError }: ErrorModal ) {
 
-    const closeModal = () => {
+    const closeModal = ():void => {
         setIsOpen(false)
         setMsgError("")
     };

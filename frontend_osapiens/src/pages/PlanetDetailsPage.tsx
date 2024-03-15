@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react'
 import PlanetsTable from '../components/PlanetsTable'
-import { useNavigate } from "react-router-dom";
 import { DataContext } from '../context/DataContext';
 import { useParams } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import ModalError from '../components/ModalError';
 import "../assets/css/planets.css"
+import { DataContextValue } from '../interfaces/DataContext';
+import { Planets } from '../interfaces/Planets';
+
+interface Params {
+    planetID: string;
+}
 
 function PlanetDetailsPage() {
-    const navigate = useNavigate();
-    const { planetID } = useParams();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data, 
-        isError, setIsError, msgError, setMsgError} = useContext(DataContext);
+    const { planetID } = useParams<Params>();
+    const { getIdFromURL, data, 
+        isError, setIsError, msgError, setMsgError} = useContext<DataContextValue>(DataContext);
 
-    const [planetSelected, setPlanetSelected] = useState(null)
-    const [isPlanetSelected, setIsPlanetSelected] = useState(false)
+    const [planetSelected, setPlanetSelected] = useState<Planets | null>(null)
+    const [isPlanetSelected, setIsPlanetSelected] = useState<boolean>(false)
 
 
     useEffect(() => {
@@ -24,7 +28,7 @@ function PlanetDetailsPage() {
                 setIsPlanetSelected(false)
                 return false
             }
-            const dataFiltered = data.filter(row => planetID === getIdFromURL(row.url))[0]
+            const dataFiltered = data.filter((row: Planets) => planetID === getIdFromURL(row.url))[0]
             if (dataFiltered) {
                 setIsPlanetSelected(true)
                 setPlanetSelected(dataFiltered)

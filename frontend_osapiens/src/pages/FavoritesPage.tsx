@@ -3,12 +3,14 @@ import "../assets/css/favorites.css"
 import { DataContext } from '../context/DataContext';
 import Card from '../components/Card';
 import ModalError from '../components/ModalError';
+import { DataContextValue } from '../interfaces/DataContext';
+import { Planets } from '../interfaces/Planets';
 
 
 function FavoritesPage() {
-    const { favorites, setItemNonFavorite, isError, setIsError, msgError, setMsgError } = useContext(DataContext);
-    const [clickRemoveFavorite, setClickRemoveFavorite] = useState(false)
-    const [favoriteSelected, setFavoriteSelected] = useState()
+    const { favorites, setItemNonFavorite, isError, setIsError, msgError, setMsgError } = useContext<DataContextValue>(DataContext);
+    const [clickRemoveFavorite, setClickRemoveFavorite] = useState<boolean>(false)
+    const [favoriteSelected, setFavoriteSelected] = useState<string | null>(null)
 
     const removeFavorite = (planetName:string) => {
         setFavoriteSelected(planetName)
@@ -16,13 +18,15 @@ function FavoritesPage() {
     }
     const cancelRemoving = () => {
         setClickRemoveFavorite(false)
+        setFavoriteSelected(null)
     }
 
     const confirmRemoving = (planetName:string) => {
         try{
-            const planetObject = favorites.filter(f => f.name === planetName)[0]
+            const planetObject = favorites.filter(f => f.name === planetName)[0] as Planets
             setItemNonFavorite(planetObject)
             setClickRemoveFavorite(false)
+            setFavoriteSelected(null);
         }catch(err){
             console.log(err)
             setIsError(true)

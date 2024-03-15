@@ -5,8 +5,15 @@ import {
     getSortedRowModel,
     flexRender
 } from '@tanstack/react-table';
+import { TableProps } from '../interfaces/TableProps';
 
-export function ReactTable({ data, columns, onRowClick }) {
+type ColumnSort = {
+    id: string
+    desc: boolean
+  }
+type SortingState = ColumnSort[]
+
+export function ReactTable({ data, columns, onRowClick }: TableProps) {
 
     const [sorting, setSorting] = React.useState<SortingState>([])
 

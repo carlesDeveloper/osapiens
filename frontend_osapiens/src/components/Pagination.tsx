@@ -3,12 +3,12 @@ import { DataContext } from '../context/DataContext'
 
 function Pagination(){
     const {totalPlanets, planetsPerPage, currentPage, setCurrentPage} = useContext(DataContext)
-    const [pageNumbers, setPageNumbers] = useState([])
+    const [pageNumbers, setPageNumbers] = useState<number[]>([])
 
-    const getPageNumber = (page:number) => {
+    const getPageNumber = (page: number) => {
         setCurrentPage(page)
     }
-    const getNextPage = (currentPage:number) => {
+    const getNextPage = (currentPage: number) => {
         if(currentPage === pageNumbers[pageNumbers.length - 1]) {
             return false
         }else{
@@ -16,7 +16,7 @@ function Pagination(){
         }
     }
 
-    const getPreviousPage = (currentPage:number) => {
+    const getPreviousPage = (currentPage: number) => {
         if(currentPage === 1) {
             return false
         }else{
