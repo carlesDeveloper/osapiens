@@ -1,1 +1,1 @@
-# osapiens
+# Rated power
