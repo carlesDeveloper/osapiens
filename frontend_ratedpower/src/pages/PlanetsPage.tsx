@@ -5,6 +5,7 @@ import Pagination from '../components/Pagination';
 import { DataContext } from '../context/DataContext';
 import ModalError from '../components/ModalError';
 import { DataContextValue } from '../interfaces/DataContext';
+import { Outlet } from 'react-router-dom';
 
 function PlanetsPage() {
     const { isError, setIsError, msgError, setMsgError } = useContext<DataContextValue>(DataContext);
@@ -16,6 +17,7 @@ function PlanetsPage() {
                 <PlanetsTable />
                 <Pagination />
             </div>
+            <Outlet />
             <ModalError
                 isOpen={isError}
                 msg={msgError}

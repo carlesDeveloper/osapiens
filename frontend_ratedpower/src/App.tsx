@@ -23,8 +23,9 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Navigate to="/planets" />} />
-            <Route path="planets" element={<PlanetsPage />} />
-            <Route path="planets/:planetID" element={<PlanetDetailsPage />} />
+            <Route path="planets" element={<PlanetsPage />}>
+              <Route path=":planetID" element={<PlanetDetailsPage />} />
+            </Route>
             <Route path="favorites" element={<FavoritesPage />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>

@@ -45,11 +45,6 @@ function PlanetDetailsPage() {
 
     return (
         <>
-            <div className="planets__section">
-                <div className='planets__title'>Planets</div>
-                <PlanetsTable />
-                <Pagination />
-            </div>
             {(isPlanetSelected && planetSelected !== null) ? (
                 <div className="planetdetails">
                     <div className="planetname">{planetSelected.name}</div>
