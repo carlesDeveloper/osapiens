@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { DataContext } from '../context/DataContext'
+import { UsePlanets } from '../planets/UsePlanets'
 
 function Pagination(){
-    const {totalPlanets, planetsPerPage, currentPage, setCurrentPage} = useContext(DataContext)
+    const {planetsPerPage, currentPage, setCurrentPage} = useContext(DataContext)
+    const {totalPlanets} = UsePlanets(currentPage)
     const [pageNumbers, setPageNumbers] = useState<number[]>([])
 
     const getPageNumber = (page: number) => {

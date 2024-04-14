@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { DataContext } from '../context/DataContext';
 import { Planets } from '../interfaces/Planets';
 import { DataContextValue } from '../interfaces/DataContext';
+import { UsePlanets } from '../planets/UsePlanets';
 
 interface Columns {
     accessorKey: string;
@@ -17,7 +18,9 @@ interface Columns {
 
 function PlanetsTable() {
     const navigate = useNavigate();
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, data } = useContext<DataContextValue>(DataContext);
+    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, currentPage } = useContext<DataContextValue>(DataContext);
+    
+    const {data} = UsePlanets(currentPage)
 
     const selectElement = (e: React.MouseEvent, row: any, cell: any) => {
         // In the case the user selects on Favorites columns this function should not do anything

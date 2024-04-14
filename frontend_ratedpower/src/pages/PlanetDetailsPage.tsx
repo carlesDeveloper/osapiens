@@ -7,6 +7,7 @@ import ModalError from '../components/ModalError';
 import "../assets/css/planets.css"
 import { DataContextValue } from '../interfaces/DataContext';
 import { Planets } from '../interfaces/Planets';
+import { UsePlanets } from '../planets/UsePlanets';
 
 interface Params {
     planetID: string;
@@ -14,8 +15,10 @@ interface Params {
 
 function PlanetDetailsPage() {
     const { planetID } = useParams<Params>();
-    const { getIdFromURL, data, 
-        isError, setIsError, msgError, setMsgError} = useContext<DataContextValue>(DataContext);
+    const { getIdFromURL, 
+        isError, setIsError, msgError, setMsgError, currentPage} = useContext<DataContextValue>(DataContext);
+    
+    const {data} = UsePlanets(currentPage)
 
     const [planetSelected, setPlanetSelected] = useState<Planets | null>(null)
     const [isPlanetSelected, setIsPlanetSelected] = useState<boolean>(false)

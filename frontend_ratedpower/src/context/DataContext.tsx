@@ -1,15 +1,14 @@
-import React, { createContext, useState, useEffect } from 'react'
-import { URL_API } from '../api/urls';
+import React, { createContext, useState } from 'react'
 import { DataContextValue } from '../interfaces/DataContext';
 import { Planets } from '../interfaces/Planets';
 export const DataContext = createContext<DataContextValue>({})
 
 const DataProvider = (props) => {
-    const [data, setData] = useState<Planets[]>([]);
+
     const [favorites, setFavorites] = useState<Planets[]>([])
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPlanets, setTotalPlanets] = useState(0)
+    
     const planetsPerPage = 10;
     const [isError, setIsError] = useState(false)
     const [msgError, setMsgError] = useState("")
@@ -42,40 +41,16 @@ const DataProvider = (props) => {
         return idPart
     }
 
-    useEffect(() => {
-        // Función para realizar la llamada a la API
-        const fetchData = async () => {
-            try {
-                const response = await fetch(URL_API + "planets/?page=" + currentPage);
-                let jsonData = await response.json();
-
-                const count = jsonData.count
-                setTotalPlanets(count)
-
-                jsonData = jsonData.results
-                setData(jsonData);
-            }
-            catch (err) {
-                console.log(err)
-                setIsError(true)
-                setMsgError("The data could not be retrieved, please try again later")
-
-            }
-
-        };
-
-        fetchData();
-    }, [currentPage]);
+    
 
     return (
         <DataContext.Provider
             value={{
-                data, setData,
                 favorites, setFavorites,
                 setItemFavorite, setItemNonFavorite,
                 getIdFromURL,
                 currentPage, setCurrentPage,
-                planetsPerPage, totalPlanets,
+                planetsPerPage,
                 isError, setIsError,
                 msgError, setMsgError
             }}
