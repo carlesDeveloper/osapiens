@@ -16,4 +16,5 @@ export interface DataContextValue {
     setIsError: React.Dispatch<React.SetStateAction<boolean>>;
     msgError: string;
     setMsgError: React.Dispatch<React.SetStateAction<string>>;
+    isPlanetFavorite: (planetString: string) => boolean;
 }

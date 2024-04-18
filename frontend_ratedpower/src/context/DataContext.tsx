@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react'
 import { DataContextValue } from '../interfaces/DataContext';
 import { Planets } from '../interfaces/Planets';
+import { UsePlanets } from '../planets/UsePlanets';
 export const DataContext = createContext<DataContextValue>({})
 
 const DataProvider = (props) => {
@@ -8,6 +9,7 @@ const DataProvider = (props) => {
     const [favorites, setFavorites] = useState<Planets[]>([])
 
     const [currentPage, setCurrentPage] = useState(1);
+    const { data, totalPlanets } = UsePlanets(currentPage)
     
     const planetsPerPage = 10;
     const [isError, setIsError] = useState(false)
@@ -41,18 +43,26 @@ const DataProvider = (props) => {
         return idPart
     }
 
+    const isPlanetFavorite = (planet: string): boolean => {
+        if (favorites.length === 0) return false;
+        const searchPlanet = favorites.filter(f => f.name === planet)
+        const assesment = searchPlanet.length === 0 ? false : true
+        return assesment
+    }
     
 
     return (
         <DataContext.Provider
             value={{
+                data, totalPlanets,
                 favorites, setFavorites,
                 setItemFavorite, setItemNonFavorite,
                 getIdFromURL,
                 currentPage, setCurrentPage,
                 planetsPerPage,
                 isError, setIsError,
-                msgError, setMsgError
+                msgError, setMsgError,
+                isPlanetFavorite
             }}
         >
             {props.children}

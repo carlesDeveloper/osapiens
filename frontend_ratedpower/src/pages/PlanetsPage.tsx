@@ -6,9 +6,38 @@ import { DataContext } from '../context/DataContext';
 import ModalError from '../components/ModalError';
 import { DataContextValue } from '../interfaces/DataContext';
 import { Outlet } from 'react-router-dom';
+import CustomTable from '../components/CustomTable';
 
 function PlanetsPage() {
-    const { isError, setIsError, msgError, setMsgError } = useContext<DataContextValue>(DataContext);
+    const { isError, setIsError, msgError, setMsgError, currentPage, data } = useContext<DataContextValue>(DataContext);
+
+    const headers = [
+        {
+            "accessor": "name",
+            "label": "Name",
+            "sortable": false
+        },
+        {
+            "accessor": "climate",
+            "label": "Climate",
+            "sortable": false
+        },
+        {
+            "accessor": "diameter",
+            "label": "Diameter",
+            "sortable": true
+        },
+        {
+            "accessor": "population",
+            "label": "Population",
+            "sortable": true
+        },
+        {
+            "accessor": "favorites",
+            "label": "Favorites",
+            "sortable": false
+        },
+    ]
 
     return (
         <>
@@ -16,6 +45,10 @@ function PlanetsPage() {
                 <div className='planets__title'>Planets</div>
                 <PlanetsTable />
                 <Pagination />
+                <CustomTable 
+                    headers={headers}
+                    data={data}
+                />
             </div>
             <Outlet />
             <ModalError

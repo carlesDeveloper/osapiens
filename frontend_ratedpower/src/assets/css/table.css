@@ -1,0 +1,7 @@
+.customtable th{
+    text-transform: capitalize;
+}
+
+.customtable table td:last-child{
+    text-align: center;
+}
