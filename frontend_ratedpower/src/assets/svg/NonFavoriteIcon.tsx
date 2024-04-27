@@ -1,4 +1,3 @@
-import * as React from "react";
 export function NonFavoriteIcon() {
   return (
     <svg width ="20px" viewBox="0 0 100 100">

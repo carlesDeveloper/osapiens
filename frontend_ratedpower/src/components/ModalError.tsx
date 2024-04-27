@@ -1,4 +1,3 @@
-import React from 'react'
 import "../assets/css/modalerror.css"
 import { ErrorModal } from '../interfaces/Error';
 

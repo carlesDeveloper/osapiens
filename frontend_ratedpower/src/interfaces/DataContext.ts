@@ -2,7 +2,6 @@ import { Planets } from "./Planets";
 
 export interface DataContextValue {
     data: Planets[];
-    setData: React.Dispatch<React.SetStateAction<Planets[]>>;
     favorites: Planets[];
     setFavorites: React.Dispatch<React.SetStateAction<Planets[]>>;
     setItemFavorite: (planetObject: Planets) => void;

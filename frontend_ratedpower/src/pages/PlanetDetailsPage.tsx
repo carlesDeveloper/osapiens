@@ -1,33 +1,30 @@
-import React, { useState, useEffect, useContext } from 'react'
-import PlanetsTable from '../components/PlanetsTable'
+import { useState, useEffect, useContext } from 'react'
 import { DataContext } from '../context/DataContext';
 import { useParams } from 'react-router-dom';
-import Pagination from '../components/Pagination';
 import ModalError from '../components/ModalError';
 import "../assets/css/planets.css"
 import { DataContextValue } from '../interfaces/DataContext';
 import { Planets } from '../interfaces/Planets';
 
-interface Params {
+type Params = {
     planetID: string;
 }
 
 function PlanetDetailsPage() {
     const { planetID } = useParams<Params>();
     const { getIdFromURL, data,
-        isError, setIsError, msgError, setMsgError, currentPage} = useContext<DataContextValue>(DataContext);
+        isError, setIsError, msgError, setMsgError} = useContext<DataContextValue>(DataContext);
     
 
     const [planetSelected, setPlanetSelected] = useState<Planets | null>(null)
     const [isPlanetSelected, setIsPlanetSelected] = useState<boolean>(false)
 
 
-    useEffect(() => {
-
+    useEffect(():void => {
         try{
             if (!planetID) {
                 setIsPlanetSelected(false)
-                return false
+                return
             }
             const dataFiltered = data.filter((row: Planets) => planetID === getIdFromURL(row.url))[0]
             if (dataFiltered) {

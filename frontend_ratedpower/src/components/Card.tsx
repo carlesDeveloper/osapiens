@@ -1,4 +1,3 @@
-import React from 'react'
 import { Planets } from '../interfaces/Planets';
 
 interface CardProps extends Planets{

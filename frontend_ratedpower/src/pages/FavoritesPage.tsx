@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import "../assets/css/favorites.css"
 import { DataContext } from '../context/DataContext';
 import Card from '../components/Card';
@@ -67,7 +67,7 @@ function FavoritesPage() {
                             <div className='removemodal__text'>Planet will be removed from favorites</div>
                             <div className='removemodal__buttons'>
                                 <button id='cancelmodal' onClick={() => cancelRemoving()}>Cancel</button>
-                                <button id='remove' onClick={(e) => confirmRemoving(favoriteSelected)}>Remove</button>
+                                <button id='remove' onClick={() => confirmRemoving(favoriteSelected)}>Remove</button>
                             </div>
                         </div>
                     </div>

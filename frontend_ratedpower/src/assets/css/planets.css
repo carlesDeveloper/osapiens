@@ -8,10 +8,13 @@
     margin-top: 2vh;
     
 }
-
-table {
+.customtable table{
+    width: 70vw;
+    margin: 10px 10px 10px;
+    margin-top: 2vh;
+}
+.customtable table {
     cursor: pointer;
-    width: 100%;
     text-align: left;
     border-spacing: 0;
 }

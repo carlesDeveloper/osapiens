@@ -1,4 +1,3 @@
-import React from 'react'
 import { navbarTitle } from '../constants'
 import { NavLink } from "react-router-dom";
 import "../assets/css/navbar.css"

@@ -1,15 +1,22 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react'
+import {useContext, useMemo, useState} from 'react'
 import { DataContext } from '../context/DataContext';
 import { FavoriteIcon } from '../assets/svg/FavoriteIcon';
 import { NonFavoriteIcon } from '../assets/svg/NonFavoriteIcon';
 import "../assets/css/table.css"
+import { DataContextValue } from '../interfaces/DataContext';
 
-export default function CustomTable({headers, data}){
+export interface HeaderInterface{
+    accessor: string,
+    label: string,
+    sortable: boolean
+}
+
+export default function CustomTable({headers, data, onRowClick}){
     const [sortType, setSortType] = useState("")
     const [accessorSorting, setAccessorSorting] = useState("")
     const [extractedData, setExtractedData] = useState([])
   
-    const { favorites, setItemFavorite, setItemNonFavorite, getIdFromURL, currentPage, isPlanetFavorite } = useContext<DataContextValue>(DataContext);
+    const { setItemFavorite, setItemNonFavorite, isPlanetFavorite } = useContext<DataContextValue>(DataContext);
     
 
 
@@ -59,11 +66,11 @@ export default function CustomTable({headers, data}){
                             (Object.values(extractedData).map(v => 
                                 <>
                                     <tr key={v.name}>
-                                        <td>{v.name}</td>
-                                        <td>{v.climate}</td>
-                                        <td>{v.diameter}</td>
-                                        <td>{v.population}</td>
-                                        <td>{isPlanetFavorite(v.name) ? 
+                                        <td onClick={() => onRowClick(v.name)}>{v.name}</td>
+                                        <td onClick={() => onRowClick(v.name)}>{v.climate}</td>
+                                        <td onClick={() => onRowClick(v.name)}>{v.diameter}</td>
+                                        <td onClick={() => onRowClick(v.name)}>{v.population}</td>
+                                        <td  onClick={() => onRowClick(v.name, "favorite")}>{isPlanetFavorite(v.name) ? 
                                             <button className="favorite__button" onClick={() => setItemNonFavorite(v)}><FavoriteIcon /></button> 
                                         : 
                                             <button className="favorite__button" onClick={() => setItemFavorite(v)}><NonFavoriteIcon /></button>}

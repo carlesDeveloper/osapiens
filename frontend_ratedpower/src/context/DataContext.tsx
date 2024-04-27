@@ -1,8 +1,8 @@
-import React, { createContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import { DataContextValue } from '../interfaces/DataContext';
 import { Planets } from '../interfaces/Planets';
 import { UsePlanets } from '../planets/UsePlanets';
-export const DataContext = createContext<DataContextValue>({})
+export const DataContext = createContext<DataContextValue>(null)
 
 const DataProvider = (props) => {
 
